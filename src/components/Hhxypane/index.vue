@@ -18,18 +18,18 @@
                     </el-row>
                     <el-row>
                       <el-col :span="12">
-                        <el-form-item label="顾客姓名"><span>{{ props.row.name }}</span></el-form-item>
+                        <el-form-item label="顾客姓名"><span>{{ props.row.customer_realname }}</span></el-form-item>
                       </el-col>
                       <el-col :span="12">
-                        <el-form-item label="员工姓名"><span>{{ props.row.name }}</span></el-form-item>
+                        <el-form-item label="员工姓名"><span>{{ props.row.waiter_realname }}</span></el-form-item>
                       </el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="12">
-                        <el-form-item label="顾客联系方式"><span>{{ props.row.name }}</span></el-form-item>
+                        <el-form-item label="顾客联系方式"><span>{{ props.row.customer_telephone }}</span></el-form-item>
                       </el-col>
                       <el-col :span="12">
-                        <el-form-item label="员工联系方式"><span>{{ props.row.name }}</span></el-form-item>
+                        <el-form-item label="员工联系方式"><span>{{ props.row.waiter_telephone }}</span></el-form-item>
                       </el-col>
                     </el-row>
                 </el-form>
@@ -38,8 +38,8 @@
           <el-table-column label="订单编号" prop="id"></el-table-column>
           <el-table-column label="下单时间" prop="orderTime"></el-table-column>
           <el-table-column label="支付金额" prop="total"></el-table-column>
-          <el-table-column label="员工" prop="waiterId"></el-table-column>
-          <el-table-column label="顾客" prop="customerId"></el-table-column>
+          <el-table-column label="员工" prop="waiter_realname"></el-table-column>
+          <el-table-column label="顾客" prop="customer_realname"></el-table-column>
           <el-table-column label="顾客地址" prop="addressId" width="300">
               <template slot-scope="scope">
                   <!-- 湖南省怀化市鹤城区坨院街道 -->

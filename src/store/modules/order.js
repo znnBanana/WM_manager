@@ -1,4 +1,5 @@
 import {get,post} from '../../../http/axios'
+import Axios from 'axios'
 export default {
     namespaced: true,
     state: {
@@ -50,13 +51,57 @@ export default {
         // 查询所有订单
         async findAllOrders({commit}){
             let response = await get('/order/findAll')
-            commit('refreshAllOrders',response.data)
+            response.data.forEach((item)=>{
+                // 根据顾客id查询顾客详情
+                var customer_obj = {
+                    id:item.customerId
+                }
+                get('/customer/findCustomerById',customer_obj).then((res)=>{
+                    item.customer_realname = res.data.realname
+                    item.customer_telephone = res.data.telephone
+                })
+                // 根据员工id查询员工详情
+                if(item.waiterId){
+                    var waiter_obj = {
+                        id:item.waiterId
+                    }
+                    get('/waiter/findWaiterById',waiter_obj).then((res)=>{
+                        item.waiter_realname = res.data.realname
+                        item.waiter_telephone = res.data.telephone
+                    })
+                }
+            })
+            // 设置延时器，防止自定义数据没有封装完成
+            setTimeout(() => {
+                commit('refreshAllOrders',response.data)
+            }, 1000);
         },
         // 分页查询
         async findOrdersQuery({commit},params){
             let response = await post('/order/queryPage',params)
             commit('refreshOrders',response.data)
-            commit('refreshOrdersList',response.data.list)
+            response.data.list.forEach((item)=>{
+                var customer_obj = {
+                    id:item.customerId
+                }
+                get('/customer/findCustomerById',customer_obj).then((res)=>{
+                    item.customer_realname = res.data.realname
+                    item.customer_telephone = res.data.telephone
+                })
+                // 加判断，waiterId存在的时候再调接口
+                if(item.waiterId){
+                    var waiter_obj = {
+                        id:item.waiterId
+                    }
+                    get('/waiter/findWaiterById',waiter_obj).then((res)=>{
+                        item.waiter_realname = res.data.realname
+                        item.waiter_telephone = res.data.telephone
+                    })
+                }
+            })
+            setTimeout(() => {
+                commit('refreshOrdersList',response.data.list)
+            }, 1000);
         },
         // 分页查询根据顾客id
         async findOrdersBycus({commit},params){
