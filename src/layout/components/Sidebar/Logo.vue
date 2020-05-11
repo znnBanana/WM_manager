@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      title: '外卖订餐服务平台',
+      title: '飞毛腿 外卖订餐',
       // logo: 'http://www.w3.org/2000/svg'
       // logo: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584534150676&di=6309842b27f2a4f21e86ff2226ebb8a8&imgtype=0&src=http%3A%2F%2Fpic.soutu123.cn%2Felement_origin_min_pic%2F16%2F09%2F20%2F1657e0f6b697710.jpg!%2Ffw%2F700%2Fquality%2F90%2Funsharp%2Ftrue%2Fcompress%2Ftrue'
     }

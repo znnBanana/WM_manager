@@ -44,7 +44,7 @@ export const constantRoutes = [
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
+      name: '飞毛腿外卖订餐',
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'dashboard' }
     }]
@@ -68,6 +68,19 @@ export const constantRoutes = [
     }]
   },
 
+  // 栏目
+  {
+    path: '/category',
+    component: Layout,
+    redirect: '/category',
+    children: [{
+      path: 'list',
+      name: 'Category_List',
+      component: () => import('@/pages/category/List'),
+      meta: { title: '品类管理', icon: 'tree' }
+    }]
+  },
+
   // 产品
   {
     path: '/product',
@@ -82,21 +95,8 @@ export const constantRoutes = [
       path: 'details',
       name: 'Product_Details',
       component: () => import('@/pages/product/Details'),
-      meta: { title: '商品详情'},
+      meta: { title: '商品管理'},
       hidden: true
-    }]
-  },
-
-  // 栏目
-  {
-    path: '/category',
-    component: Layout,
-    redirect: '/category',
-    children: [{
-      path: 'list',
-      name: 'Category_List',
-      component: () => import('@/pages/category/List'),
-      meta: { title: '品类管理', icon: 'tree' }
     }]
   },
 
@@ -141,7 +141,7 @@ export const constantRoutes = [
       path: 'list',
       name: 'Comment_List',
       component: () => import('@/pages/comment/List'),
-      meta: { title: '评论管理', icon: 'example' }
+      meta: { title: '评论管理', icon: 'eye-open' }
     }]
   },
 

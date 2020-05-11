@@ -9,9 +9,19 @@ export default {
         // 订单
         orders: [],
         ordersList: [],
-        allOrders: []
+        allOrders: [],
+        // 员工
+        orderw: [],
     },
     getters: {
+        // 员工订单过滤器
+        ordersFilterw(state) {
+            return function(status) {
+              return state.orderw.filter((response) => {
+                return response.status === status
+              })
+            }
+        },
         // 顾客订单过滤器
         ordersFilter(state) {
             return function(status) {
@@ -28,6 +38,10 @@ export default {
         }
     },
     mutations: {
+        // 根据员工id查询订单
+        refreshOrdersByWai(state,orderw){
+            state.orderw = orderw
+        },  
         // 查询所有订单
         refreshAllOrders(state,allOrders){
             state.allOrders = allOrders
@@ -48,6 +62,25 @@ export default {
         }
     },
     actions: {
+        // 派单
+        async sendOrder({dispatch},params){
+            let response = await get('/order/sendOrder',params)
+            dispatch('findOrdersQuery')
+            return response
+        },
+        // 分页查询员工订单，根据员工id
+        async queryOrdersByWai({commit},param){
+            let response = await get('/order/query',param)
+            response.data.forEach((item)=>{
+                let address = {
+                    addressId: item.address.province+""+item.address.city+""+item.address.area+""+item.address.address
+                }
+                item.addressId = address.addressId
+            })
+            setTimeout(() => {
+                commit('refreshOrdersByWai',response.data)
+            },1000)
+        },
         // 查询所有订单
         async findAllOrders({commit}){
             let response = await get('/order/findAll')
@@ -107,12 +140,20 @@ export default {
         async findOrdersBycus({commit},params){
             let response = await post('/order/queryPage',params)
             commit('refreshOrdersBycus',response.data)
-            commit('refreshOrdersBycusList',response.data.list)
+            response.data.list.forEach((item)=>{
+                console.log(item)
+                let waiter_id = {
+                    id: item.waiterId
+                }
+                // 根据员工id查询姓名
+                get('/waiter/findWaiterById',waiter_id)
+                .then((res)=>{
+                    item.waitername = res.data.username
+                })
+            })
+            setTimeout(()=>{
+                commit('refreshOrdersBycusList',response.data.list)
+            },1000)
         },
-        // 根据顾客id查询订单
-        // async findOrdersBycus({commit},customerId){
-        //     let response = await get('/order/query?customerId='+customerId)
-        //     commit('refreshOrdersBycus',response.data)
-        // }
     }
 }

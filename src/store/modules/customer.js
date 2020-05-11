@@ -2,33 +2,40 @@ import {get,post} from '../../../http/axios'
 export default {
     namespaced: true,
     state: {
-        customers: {},
-        customer_ById: {}
+        customers: [],
+        customer_ByStatus: []
     },
     mutations: {
         // 通过突变修改state中的值
         refreshCustomers(state,customers) {
             state.customers = customers
         },
-        refreshCustomerById(state,customer_ById){
-            state.customer_ById = customer_ById
-        }
+        refreshCustomerByStatus(state,customer_ByStatus){
+            state.customer_ByStatus = customer_ByStatus
+        },
+        
     },
     actions: {
-        // 根据id查询
-        // async findCustomerById({commit},id){
-        //     let response = await get('/customer/findCustomerById',id)
-        //     commit('refreshCustomerById',response.data)
+        // 根据状态查询
+        // async findCustomerByStatus({commit},params){
+        //     let response = await post('/customer/query',params)
+        //     commit('refreshCustomerByStatus',response.data)
         // },
         // 分页查询
         async queryCustomers({commit},params){
             let response = await post ('/customer/query',params)
-            commit('refreshCustomers',response.data)
+            response.data.list.forEach((item)=>{
+                let customer_id = {
+                    id: item.id
+                }
+                get('/address/findByCustomerId',customer_id).then((res)=>{
+                    item.addresses = res.data[0].province+""+res.data[0].city+""+res.data[0].area+""+res.data[0].address
+                    console.log(item.addresses)
+                })
+            })
+            setTimeout(()=>{
+                commit('refreshCustomers',response.data)
+            },1000)
         },
-        // async findAllCustomers({commit}){
-        //     let response = await get ('/customer/findAll')
-        //     commit('refreshCustomers',response.data)
-        // }
-
     }
 }

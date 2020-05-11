@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '外卖订餐服务平台',
+  title: '飞毛腿 外卖订餐服务平台',
 
   /**
    * @type {boolean} true | false

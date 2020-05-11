@@ -6,16 +6,18 @@
         <!-- 标签页 -->
         <el-tabs v-model="activeName" @tab-click="handleClick">
             <!-- 基本信息 -->
-            <!-- {{($route.querBy)}} -->
+            <!-- {{($route.query)}} -->
             <el-tab-pane label="基本信息" name="first">
                 <el-card class="box-card">
                     <div class="waiter_info">
+                        <!-- {{address_c}} -->
                         <div>
                             <img class="info_img" :src="url" alt="">
                         </div>
-                        <div>姓名：{{($route.query).username}}</div>
+                        <div>会员名：{{($route.query).username}}</div>
+                        <div>真实姓名：{{($route.query).realname}}</div>
                     </div>
-                    <div>默认地址：{{($route.query).province}} {{($route.query).city}} {{($route.query).area}}</div>
+                    <div>默认地址：{{address_c[0].province}}{{address_c[0].city}}{{address_c[0].area}}{{address_c[0].address}} </div>
                     <div>注册时间：{{($route.query).registerTime | dateFormat}}</div>
                     <div>最后一次登录时间：{{($route.query).lastLoginTime | dateFormat}}</div>
                 </el-card>
@@ -24,13 +26,13 @@
             <!-- 订单信息 -->
             <el-tab-pane label="顾客订单" name="second">
                 <el-tabs type="border-card">
-                <!-- {{orderList}} -->
+                <!-- {{ordercList}} -->
                     <el-tab-pane label="全部订单">
                         <el-table :data="ordercList" style="width: 100% !important" size="small">
                             <el-table-column prop="id" label="订单编号" width="100" align="center"></el-table-column>
-                            <el-table-column prop="orderTime" label="下单时间" align="center"></el-table-column>
-                            <el-table-column prop="customerId" label="顾客" align="center"></el-table-column>
-                            <el-table-column prop="waiterId" label="服务员" align="center"></el-table-column>
+                            <el-table-column prop="orderTime" label="下单时间" align="center" :formatter="dateFormat"></el-table-column>
+                            <!-- <el-table-column prop="customerId" label="顾客" align="center"></el-table-column> -->
+                            <el-table-column prop="waitername" label="配送员" align="center"></el-table-column>
                             <el-table-column prop="addressId" label="地址" align="center"></el-table-column>
                             <el-table-column prop="status" label="状态" align="center"></el-table-column>
                         </el-table>
@@ -48,9 +50,9 @@
                     <el-tab-pane label="待支付">
                         <el-table :data="ordersFilter('待支付')" style="width: 100% !important" size="small">
                             <el-table-column prop="id" label="订单编号" width="100" align="center"></el-table-column>
-                            <el-table-column prop="orderTime" label="下单时间" align="center"></el-table-column>
-                            <el-table-column prop="customerId" label="顾客" align="center"></el-table-column>
-                            <el-table-column prop="waiterId" label="服务员" align="center"></el-table-column>
+                            <el-table-column prop="orderTime" label="下单时间" align="center" :formatter="dateFormat"></el-table-column>
+                            <!-- <el-table-column prop="customerId" label="顾客" align="center"></el-table-column> -->
+                            <el-table-column prop="waitername" label="配送员" align="center"></el-table-column>
                             <el-table-column prop="addressId" label="地址" align="center"></el-table-column>
                             <el-table-column prop="status" label="状态" align="center"></el-table-column>
                         </el-table>
@@ -58,9 +60,9 @@
                     <el-tab-pane label="待接单">
                         <el-table :data="ordersFilter('待接单')" style="width: 100% !important" size="small">
                             <el-table-column prop="id" label="订单编号" width="100" align="center"></el-table-column>
-                            <el-table-column prop="orderTime" label="下单时间" align="center"></el-table-column>
-                            <el-table-column prop="customerId" label="顾客" align="center"></el-table-column>
-                            <el-table-column prop="waiterId" label="服务员" align="center"></el-table-column>
+                            <el-table-column prop="orderTime" label="下单时间" align="center" :formatter="dateFormat"></el-table-column>
+                            <!-- <el-table-column prop="customerId" label="顾客" align="center"></el-table-column> -->
+                            <el-table-column prop="waitername" label="配送员" align="center"></el-table-column>
                             <el-table-column prop="addressId" label="地址" align="center"></el-table-column>
                             <el-table-column prop="status" label="状态" align="center"></el-table-column>
                         </el-table>
@@ -68,9 +70,9 @@
                     <el-tab-pane label="待派单">
                         <el-table :data="ordersFilter('待派单')" style="width: 100% !important" size="small">
                             <el-table-column prop="id" label="订单编号" width="100" align="center"></el-table-column>
-                            <el-table-column prop="orderTime" label="下单时间" align="center"></el-table-column>
-                            <el-table-column prop="customerId" label="顾客" align="center"></el-table-column>
-                            <el-table-column prop="waiterId" label="服务员" align="center"></el-table-column>
+                            <el-table-column prop="orderTime" label="下单时间" align="center" :formatter="dateFormat"></el-table-column>
+                            <!-- <el-table-column prop="customerId" label="顾客" align="center"></el-table-column> -->
+                            <el-table-column prop="waitername" label="配送员" align="center"></el-table-column>
                             <el-table-column prop="addressId" label="地址" align="center"></el-table-column>
                             <el-table-column prop="status" label="状态" align="center"></el-table-column>
                         </el-table>
@@ -78,9 +80,9 @@
                     <el-tab-pane label="待确认">
                         <el-table :data="ordersFilter('待确认')" style="width: 100% !important" size="small">
                             <el-table-column prop="id" label="订单编号" width="100" align="center"></el-table-column>
-                            <el-table-column prop="orderTime" label="下单时间" align="center"></el-table-column>
-                            <el-table-column prop="customerId" label="顾客" align="center"></el-table-column>
-                            <el-table-column prop="waiterId" label="服务员" align="center"></el-table-column>
+                            <el-table-column prop="orderTime" label="下单时间" align="center" :formatter="dateFormat"></el-table-column>
+                            <!-- <el-table-column prop="customerId" label="顾客" align="center"></el-table-column> -->
+                            <el-table-column prop="waitername" label="配送员" align="center"></el-table-column>
                             <el-table-column prop="addressId" label="地址" align="center"></el-table-column>
                             <el-table-column prop="status" label="状态" align="center"></el-table-column>
                         </el-table>
@@ -88,9 +90,9 @@
                     <el-tab-pane label="已完成">
                         <el-table :data="ordersFilter('已完成')" style="width: 100% !important" size="small">
                             <el-table-column prop="id" label="订单编号" width="100" align="center"></el-table-column>
-                            <el-table-column prop="orderTime" label="下单时间" align="center"></el-table-column>
-                            <el-table-column prop="customerId" label="顾客" align="center"></el-table-column>
-                            <el-table-column prop="waiterId" label="服务员" align="center"></el-table-column>
+                            <el-table-column prop="orderTime" label="下单时间" align="center" :formatter="dateFormat"></el-table-column>
+                            <!-- <el-table-column prop="customerId" label="顾客" align="center"></el-table-column> -->
+                            <el-table-column prop="waitername" label="配送员" align="center"></el-table-column>
                             <el-table-column prop="addressId" label="地址" align="center"></el-table-column>
                             <el-table-column prop="status" label="状态" align="center"></el-table-column>
                         </el-table>
@@ -101,11 +103,11 @@
             <!-- 地址列表 -->
             <el-tab-pane label="地址列表" name="third">
                 <!-- {{address_c}} -->
-                <el-table :data="address_c" size="small" :show-header="false">
-                    <el-table-column prop="id" type="index" width="100" align="center"></el-table-column>
-                    <el-table-column prop="addrecc" label="地址" align="center" width="300px">
+                <el-table :data="address_c" size="small" width="100%" :show-header="false">
+                    <el-table-column type="index"></el-table-column>
+                    <el-table-column prop="id"></el-table-column>
+                    <el-table-column prop="addrecc" label="地址">
                         <template slot-scope="scope">
-                        <!-- 湖南省怀化市鹤城区坨院街道 -->
                         {{scope.row.province}}
                         {{scope.row.city}}
                         {{scope.row.area}}
@@ -121,6 +123,8 @@
 
 <script>
 import {mapState,mapActions,mapGetters} from 'vuex'
+import moment from 'moment'
+
 export default {
     data() {
         return {
@@ -139,7 +143,7 @@ export default {
         // 调用根据顾客id分页查询订单
         this.params = {
             page:0,
-            pageSize:10,
+            pageSize:8,
             customerId:this.$route.query.id
         }
         this.findOrdersBycus(this.params)  
@@ -157,6 +161,10 @@ export default {
         pageChange(page){
             this.params.page = page - 1
             this.findOrdersBycus(this.params) 
+        },
+        // 时间戳转换
+        dateFormat(row,colnum){
+            return moment(row[colnum.property]).format('YYYY-MM-DD HH:MM:SS')
         },
         // 返回顾客列表
         BackHandler(){

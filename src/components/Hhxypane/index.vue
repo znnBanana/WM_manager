@@ -10,14 +10,6 @@
                 <el-form label-position="left" inline class="demo-table-expand">
                     <el-row>
                       <el-col :span="12">
-                        <el-form-item label="顾客编号"><span>{{ props.row.customerId }}</span></el-form-item>
-                      </el-col>
-                      <el-col :span="12">
-                        <el-form-item label="员工编号"><span>{{ props.row.waiterId }}</span></el-form-item>
-                      </el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="12">
                         <el-form-item label="顾客姓名"><span>{{ props.row.customer_realname }}</span></el-form-item>
                       </el-col>
                       <el-col :span="12">
@@ -40,15 +32,14 @@
           <el-table-column label="支付金额" prop="total"></el-table-column>
           <el-table-column label="员工" prop="waiter_realname"></el-table-column>
           <el-table-column label="顾客" prop="customer_realname"></el-table-column>
-          <el-table-column label="顾客地址" prop="addressId" width="300">
+          <!-- <el-table-column label="顾客地址" prop="addressId" width="300">
               <template slot-scope="scope">
-                  <!-- 湖南省怀化市鹤城区坨院街道 -->
                   {{scope.row.province}}
                   {{scope.row.city}}
                   {{scope.row.area}}
                   {{scope.row.address}}
               </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column label="状态" prop="status" width="100px" >
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="statusHandler(scope.row)">{{scope.row.status}}</el-button>

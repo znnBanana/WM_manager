@@ -7,6 +7,11 @@ import user from './modules/user'
 import customer from './modules/customer'
 import order from './modules/order'
 import address from './modules/address'
+import product from './modules/product'
+import category from './modules/category'
+import waiter from './modules/waiter'
+import comment from './modules/comment'
+import widthdraw from './modules/widthdraw'
 
 Vue.use(Vuex)
 
@@ -17,7 +22,12 @@ const store = new Vuex.Store({
     user,
     customer,
     order,
-    address
+    address,
+    product,
+    category,
+    waiter,
+    comment,
+    widthdraw
   },
   getters
 })
