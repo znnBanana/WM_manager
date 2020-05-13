@@ -315,7 +315,7 @@ export default {
     overflow: hidden;
   }
   .product >>> .el-upload:hover {
-    border-color: #409EFF;
+    border-color: #f6544a;
   }
   .avatar-uploader-icon {
     font-size: 28px;

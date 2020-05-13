@@ -1,7 +1,7 @@
 <template>
     <div class="comment">
         <!-- 按钮 -->
-        <el-button type="danger" size="small" plain @click="batchDeleteHandler">批量删除</el-button>
+        <el-button style="margin-bottom:1em" type="danger" size="small" plain @click="batchDeleteHandler">批量删除</el-button>
         <!-- /按钮 -->
         <!-- 表格 -->
         <el-table :data="comments.list" style="width: 100%" size="small" @selection-change="idsChangeHandler">

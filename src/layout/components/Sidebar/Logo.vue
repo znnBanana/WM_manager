@@ -8,7 +8,7 @@
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
         <!-- <img v-if="logo" class="sidebar-logo"> -->
         <h1 class="sidebar-title">
-        <i class="iconfont icon-waimai2" style="color:#52C48F;height:20px;width:20px"></i>&nbsp;
+        <i class="iconfont icon-waimai2" style="height:24px;width:24px"></i>&nbsp;
         {{ title }} </h1>
       </router-link>
     </transition>
@@ -49,7 +49,7 @@ export default {
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: #2b2f3a;
+  background: #f6544a;
   text-align: center;
   overflow: hidden;
 

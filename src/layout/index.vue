@@ -6,7 +6,7 @@
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
       </div>
-      <div style="margin:1em">
+      <div>
         <app-main />
       </div>
     </div>
@@ -55,7 +55,10 @@ export default {
 <style lang="scss" scoped>
   @import "~@/styles/mixin.scss";
   @import "~@/styles/variables.scss";
-
+  .app-main {
+    padding:1em;
+    background: #f6f6f6;
+  }
   .app-wrapper {
     @include clearfix;
     position: relative;
